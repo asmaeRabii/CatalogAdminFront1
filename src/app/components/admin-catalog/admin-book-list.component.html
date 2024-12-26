@@ -1,0 +1,170 @@
+<div class="dashboard">
+  <div class="sidebar">
+    <div class="logo">
+      <span>Admin</span>
+    </div>
+    <div class="menu">
+      <ul>
+        <li><a href="#" (click)="openAddBookModal($event)">Ajouter livre</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <h2>Livre</h2>
+
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Chercher un livre" />
+      <select [(ngModel)]="searchCategory">
+        <option value="title">Chercher par titre</option>
+        <option value="author">Chercher par auteur</option>
+        <option value="category">Chercher par catégorie</option>
+      </select>
+      <button (click)="searchBooks()">Rechercher</button>
+    </div>
+
+    <table *ngIf="searchExecuted && books.length > 0">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Auteur</th>
+          <th>Catégorie</th>
+          <th>ISBN</th>
+          <th>Disponibilité</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.category }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.status ? 'Disponible' : 'Indisponible' }}</td>
+          <td>
+            <button (click)="openDeleteConfirmationModal(book)">Supprimer</button>
+            <button (click)="openEditBookModal(book)">Modifier</button> <!-- Ajout du bouton Modifier -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="modal" [ngClass]="{'show': isDeleteConfirmationOpen}" *ngIf="isDeleteConfirmationOpen">
+      <div class="modal-content confirmation">
+        <span class="close" (click)="closeDeleteConfirmationModal()">&times;</span>
+        <h2>Confirmer la suppression</h2>
+        <p>Êtes-vous sûr de vouloir supprimer ce livre ?</p>
+        <button (click)="deleteBook()">Oui, supprimer</button>
+        <button (click)="closeDeleteConfirmationModal()">Non, annuler</button>
+      </div>
+    </div>
+
+    <div *ngIf="searchExecuted && books.length === 0" class="no-results">
+      Aucun livre trouvé pour cette recherche.
+    </div>
+  </div>
+
+  <form *ngIf="bookToEdit" (ngSubmit)="submitEditBook($event)">
+    <div class="input-group">
+      <label for="title">Titre:</label>
+      <input class="input-field" type="text" id="title" [(ngModel)]="bookToEdit.title" name="title" required />
+    </div>
+    <div class="input-group">
+      <label for="author">Auteur:</label>
+      <input class="input-field" type="text" id="author" [(ngModel)]="bookToEdit.author" name="author" required />
+    </div>
+    <div class="input-group">
+      <label for="category">Catégorie:</label>
+      <input class="input-field" type="text" id="category" [(ngModel)]="bookToEdit.category" name="category" required />
+    </div>
+    <div class="input-group">
+      <label for="isbn">ISBN:</label>
+      <input class="input-field" type="text" id="isbn" [(ngModel)]="bookToEdit.isbn" name="isbn" required />
+    </div>
+    <div class="input-group">
+      <label for="status">Disponibilité:</label>
+      <input class="input-field" type="checkbox" id="status" [(ngModel)]="bookToEdit.status" name="status" />
+    </div>
+    <button type="submit">Valider la modification</button>
+  </form>
+<!-- Modal Edit Book -->
+<div *ngIf="isEditModalOpen" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeEditBookModal()">&times;</span>
+    <h2>Modifier un livre</h2>
+    <form *ngIf="bookToEdit" (ngSubmit)="submitEditBook($event)">
+      <div class="input-group">
+        <label for="title">Titre:</label>
+        <input class="input-field" type="text" id="title" [(ngModel)]="bookToEdit.title" name="title" required />
+      </div>
+      <div class="input-group">
+        <label for="author">Auteur:</label>
+        <input class="input-field" type="text" id="author" [(ngModel)]="bookToEdit.author" name="author" required />
+      </div>
+      <div class="input-group">
+        <label for="category">Catégorie:</label>
+        <input class="input-field" type="text" id="category" [(ngModel)]="bookToEdit.category" name="category" required />
+      </div>
+      <div class="input-group">
+        <label for="isbn">ISBN:</label>
+        <input class="input-field" type="text" id="isbn" [(ngModel)]="bookToEdit.isbn" name="isbn" required />
+      </div>
+      <div class="input-group">
+        <label for="status">Disponibilité:</label>
+        <input class="input-field" type="checkbox" id="status" [(ngModel)]="bookToEdit.status" name="status" />
+      </div>
+      <div class="input-group">
+        <label for="isbn">Url de l'image:</label>
+        <input class="input-field" type="text" id="imageurl" [(ngModel)]="bookToEdit.imageurl" name="imageurl" required />
+      </div>
+      <button type="submit">Valider la modification</button>
+    </form>
+  </div>
+</div>
+
+  <div class="modal" [ngClass]="{'show': isModalOpen}" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeAddBookModal()">&times;</span>
+      <h2>Ajouter un livre</h2>
+      <form (ngSubmit)="submitBook($event)">
+        <div class="input-group">
+          <label for="title">Titre:</label>
+          <input class="input-field" type="text" id="title" [(ngModel)]="newBook.title" name="title" required />
+        </div>
+        <div class="input-group">
+          <label for="author">Auteur:</label>
+          <input class="input-field" type="text" id="author" [(ngModel)]="newBook.author" name="author" required />
+        </div>
+        <div class="input-group">
+          <label for="category">Catégorie:</label>
+          <input class="input-field" type="text" id="category" [(ngModel)]="newBook.category" name="category" required />
+        </div>
+        <div class="input-group">
+          <label for="isbn">ISBN:</label>
+          <input class="input-field" type="text" id="isbn" [(ngModel)]="newBook.isbn" name="isbn" required />
+        </div>
+        <div class="input-group">
+          <label for="status">Disponibilité:</label>
+          <input class="input-field" type="checkbox" id="status" [(ngModel)]="newBook.status" name="status" />
+        </div>
+        <div class="form-group">
+          <label for="imageUrl">URL de l'image</label>
+          <input id="imageurl" class="form-control" [(ngModel)]="newBook.imageurl" name="imageurl" type="text" required />
+        </div>
+        <button type="submit">Ajouter le livre</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" [ngClass]="{'show': isMessageModalOpen}" *ngIf="isMessageModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeMessageModal()">&times;</span>
+      <div *ngIf="isSuccess" class="success-message">
+        <p>{{ message }}</p>
+      </div>
+      <div *ngIf="!isSuccess" class="error-message">
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  </div>
+</div>

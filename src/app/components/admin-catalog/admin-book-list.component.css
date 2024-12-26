@@ -1,0 +1,347 @@
+/* Dashboard container */
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.sidebar .logo {
+  background-color: orange;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.sidebar .menu ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar .menu ul li {
+  padding: 10px;
+}
+
+.sidebar .menu ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar .menu ul li a:hover {
+  background-color: #444;
+}
+
+/* Main content section */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 10px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.search-bar select {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.search-bar button {
+  padding: 10px;
+  background-color: orange;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #e67e22;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+table td {
+  background-color: #fff;
+}
+
+.no-results {
+  text-align: center;
+  color: #999;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex !important;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  width: 400px;
+  max-width: 90%;
+  max-height: 80vh;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin: auto;
+  overflow-y: auto;
+}
+
+/* Specific styles for confirmation modal */
+.modal-content.confirmation {
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content.confirmation button {
+  margin: 10px;
+  padding: 8px 20px;
+}
+
+.modal-content.confirmation button:first-of-type {
+  background-color: #dc3545;
+}
+
+.modal-content.confirmation button:last-of-type {
+  background-color: #6c757d;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: #333;
+}
+
+/* Form styles */
+.form-container {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: #4d90fe;
+  outline: none;
+}
+
+textarea.input-field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Button styles */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Modal title */
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+/* Table action buttons */
+table button {
+  padding: 6px 12px;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding-top: 10px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar input,
+  .search-bar select,
+  .search-bar button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+  }
+}
+/* Style du modal */
+.modal {
+  display: block;  /* Affiche le modal */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Fond semi-transparent */
+}
+
+/* Contenu du modal */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
+}
+
+/* Bouton de fermeture */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Champ de saisie */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
